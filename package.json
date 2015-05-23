@@ -1,6 +1,6 @@
 {
   "name": "droideka",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "fight back against email scrapers",
   "main": "index.js",
   "repository": {

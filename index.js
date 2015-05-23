@@ -22,7 +22,7 @@ module.exports = function(html){
 				var email = matches[1];
 				var id = uuid.v4();
 				inserts[id] = '<a href="mailto:'+email+'">'+email+'</a>';
-				return '<div id="'+id+'"><noscript>You must enable JavaScript to see the email.</noscript></div>';
+				return '<span id="'+id+'"><noscript>You must enable JavaScript to see the email.</noscript></span>';
 			}
 			return html_block;
 	}).join('');

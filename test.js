@@ -35,6 +35,25 @@ var randomString = function(){
 _.each(_.range(0, n_tests_to_run), function(){
   assertRecoded(randomString());
 });
+//test seeds
+(function(){
+  var text = 'some consistent string';
+
+    droideka.encode(text, 'seed 1'),
+    droideka.encode(text, 'seed 2')
+  var encoded = [
+    droideka.encode(text),
+    droideka.encode(text, null),
+    droideka.encode(text, undefined),
+  ];
+
+  if(_.size(encoded) === _.size(_.unique(encoded))){
+    n_passed++;
+  }else{
+    console.error("failed to recode", text, "but instead got back", decoded);
+    n_failed++;
+  }
+}());
 
 console.log("Done");
 console.log("#failed:", n_failed);

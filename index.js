@@ -1,12 +1,13 @@
 var _ = require('lodash');
 var cuid = require("cuid");
+var shuffle = require('knuth-shuffle-seeded');
 
 var chars_to_encode = "\"'~!@#$%^&*()<:>[]{}.,+=-ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
 var js_code_decode = "var d=function(b){var c=b.substring(0,"+chars_to_encode.length+");b=b.substring(c.length);var e,f,g,h='',d;for(e=0;e<b.length;e++)f=b.charAt(e),g=c.indexOf(f),d=(g-b.length+c.length)%c.length,d=0>d?c.length+d:d,h+=0<=g?c[d]:f;return h};";
 
-var encode = function(text){
-  var key = _.shuffle(chars_to_encode.split("")).join("")
+var encode = function(text, seed){
+  var key = shuffle(chars_to_encode.split(""), seed).join("");
 
   return key + _.map(text.split(""), function(c){
     var i = key.indexOf(c);
@@ -14,7 +15,7 @@ var encode = function(text){
   }).join('');
 };
 
-module.exports = function(html){
+module.exports = function(html, seed){
   var inserts = {};
   html = _.map(html.split(/(<a href="mailto:(?:[^"]*)">(?:[^<]*)<\/a>)/gi), function(html_block, i){
       var matches = /^<a href="mailto:([^"]*)">(?:[^<]*)<\/a>$/gi.exec(html_block);
@@ -31,7 +32,7 @@ module.exports = function(html){
     html += 'setTimeout(function(){';
     html += js_code_decode;
     html += _.map(inserts, function(html, id){
-      return '(function(){var a=document.getElementById("'+id+'");if(!a)return;a.innerHTML=d('+JSON.stringify(encode(html))+');}());';
+      return '(function(){var a=document.getElementById("'+id+'");if(!a)return;a.innerHTML=d('+JSON.stringify(encode(html, seed))+');}());';
     }).join('');
     html += '}, 500);';
     html += '</script>';

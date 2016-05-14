@@ -48,7 +48,7 @@ Here is the output
 ```
 Take that spammers!
 
-### var encoded = droideka.encode(text)
+### encoded = droideka.encode(text)
 
 Lightly encrypt some text. (not cryptographically secure)
 

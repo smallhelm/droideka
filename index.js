@@ -1,4 +1,3 @@
-var _ = require('lodash');
 var cuid = require("cuid");
 var shuffle = require('knuth-shuffle-seeded');
 
@@ -9,7 +8,7 @@ var js_code_decode = "var d=function(b){var c=b.substring(0,"+chars_to_encode.le
 var encode = function(text, seed){
   var key = shuffle(chars_to_encode.split(""), seed).join("");
 
-  return key + _.map(text.split(""), function(c){
+  return key + text.split("").map(function(c){
     var i = key.indexOf(c);
     return i < 0 ? c : key[(i + text.length) % key.length];
   }).join('');
@@ -17,7 +16,7 @@ var encode = function(text, seed){
 
 module.exports = function(html, seed){
   var inserts = {};
-  html = _.map(html.split(/(<a href="mailto:(?:[^"]*)">(?:[^<]*)<\/a>)/gi), function(html_block, i){
+  html = html.split(/(<a href="mailto:(?:[^"]*)">(?:[^<]*)<\/a>)/gi).map(function(html_block, i){
       var matches = /^<a href="mailto:([^"]*)">(?:[^<]*)<\/a>$/gi.exec(html_block);
       if(matches && matches.length === 2){
         var email = matches[1];
@@ -27,11 +26,12 @@ module.exports = function(html, seed){
       }
       return html_block;
   }).join('');
-  if(!_.isEmpty(inserts)){
+  if(Object.keys(inserts).length > 0){
     html += '<script type="application/javascript">';
     html += 'setTimeout(function(){';
     html += js_code_decode;
-    html += _.map(inserts, function(html, id){
+    html += Object.keys(inserts).map(function(id){
+      var html = inserts[id];
       return '(function(){var a=document.getElementById("'+id+'");if(!a)return;a.innerHTML=d('+JSON.stringify(encode(html, seed))+');}());';
     }).join('');
     html += '}, 500);';

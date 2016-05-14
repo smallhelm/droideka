@@ -1,19 +1,23 @@
 # droideka
+
+[![build status](https://secure.travis-ci.org/smallhelm/droideka.png)](https://travis-ci.org/smallhelm/droideka)
+[![dependency status](https://david-dm.org/smallhelm/droideka.svg)](https://david-dm.org/smallhelm/droideka)
+
 fight back against email scrapers
 
-# What it does
+## What it does
 
  * finds all `<a href="mailto:...` email addresses in your html
  * encrypts them
  * appends some JS to your html that decrypts them 1/2 second after the page loads
 
-# How to use it
+## How to use it
 
 ```js
 var droideka = require('droideka');
 ```
 
-## html = droideka(html)
+### html = droideka(html)
 
 Your HTML
 ```html
@@ -44,11 +48,11 @@ Here is the output
 ```
 Take that spammers!
 
-## var encoded = droideka.encode(text)
+### var encoded = droideka.encode(text)
 
 Lightly encrypt some text. (not cryptographically secure)
 
-## droideka.js\_code\_decode
+### droideka.js\_code\_decode
 
 A string of JS code that creates a local function `d` that can be used for decoding.
 
@@ -59,26 +63,5 @@ html += 'var email = d(' + JSON.stringify(encoded) + ');';//call it
 html += '</script>';
 ```
 
-# License
-
-The MIT License (MIT)
-
-Copyright (c) 2015 Small Helm LLC
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+## License
+MIT

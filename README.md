@@ -17,7 +17,7 @@ fight back against email scrapers
 var droideka = require('droideka');
 ```
 
-### html = droideka(html)
+### html = droideka(html[, seed])
 
 Your HTML
 ```html
@@ -48,7 +48,9 @@ Here is the output
 ```
 Take that spammers!
 
-### encoded = droideka.encode(text)
+`seed` can be any string, i.e. your package.json's version string.
+
+### encoded = droideka.encode(text[, seed])
 
 Lightly encrypt some text. (not cryptographically secure)
 

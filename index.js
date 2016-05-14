@@ -1,4 +1,4 @@
-var cuid = require("cuid");
+var nextID = require('gen-css-identifier/factory')('droideka-');
 var shuffle = require('knuth-shuffle-seeded');
 
 var chars_to_encode = "\"'~!@#$%^&*()<:>[]{}.,+=-ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -20,7 +20,7 @@ module.exports = function(html, seed){
       var matches = /^<a href="mailto:([^"]*)">(?:[^<]*)<\/a>$/gi.exec(html_block);
       if(matches && matches.length === 2){
         var email = matches[1];
-        var id = cuid();
+        var id = nextID();
         inserts[id] = '<a href="mailto:'+email+'">'+email+'</a>';
         return '<span id="'+id+'"><noscript>You must enable JavaScript to see the email.</noscript></span>';
       }
